@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- SEO Básico -->
+    <title>🎄 Feliz Navidad - Tarjeta Virtual Interactiva ✨</title>
+    <meta name="description" content="Una tarjeta de Navidad especial llena de magia y buenos deseos. Abre tu regalo navideño y descubre un mensaje único para ti.">
+    <meta name="author" content="Familia Reyes López">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://felizfamiliareyeslopez.netlify.app/">
+    <meta property="og:title" content="🎁 ¡Tienes un Regalo de Navidad Esperándote!">
+    <meta property="og:description" content="Alguien especial te ha enviado una tarjeta de Navidad mágica. Haz clic para abrirla y descubrir tu mensaje navideño. 🎄✨">
+    <meta property="og:image" content="https://felizfamiliareyeslopez.netlify.app/portada.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="800">
+    <meta property="og:image:alt" content="Tarjeta de Navidad Virtual - Familia Reyes López">
+    <meta property="og:image:type" content="image/jpg">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="Tarjeta Navideña Familia Reyes López">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🎁 ¡Tienes un Regalo de Navidad Esperándote!">
+    <meta name="twitter:description" content="Alguien especial te ha enviado una tarjeta de Navidad mágica. Haz clic para abrirla y descubrir tu mensaje navideño. 🎄✨">
+    <meta name="twitter:image" content="https://felizfamiliareyeslopez.netlify.app/portada.jpg">
+    <meta name="twitter:image:alt" content="Tarjeta de Navidad Virtual">
+    
+    <!-- Preconexión de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 25%, #DC143C 50%, #C41E3A 75%, #8B0000 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Partículas de nieve */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2em;
+            animation: snowfall linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes snowfall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Overlay de bienvenida */
+        #welcomeOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #C41E3A 50%, #8B0000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        #welcomeOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .gift-icon {
+            font-size: 7rem;
+            animation: heartbeat 1.8s ease-in-out infinite;
+            margin-bottom: 3rem;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        .open-button {
+            background: rgba(255, 255, 255, 0.95);
+            color: #8B0000;
+            border: none;
+            padding: 1.3rem 3.5rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .open-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .open-button:active {
+            transform: scale(0.96);
+        }
+
+        /* Contenedor de tarjeta */
+        .card-wrapper {
+            width: 92%;
+            max-width: 480px;
+            opacity: 0;
+            transform: scale(0.85) translateY(30px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+            z-index: 10;
+            position: relative;
+        }
+
+        .card-wrapper.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 35px;
+            padding: 3rem 2rem 2.5rem;
+            box-shadow: 
+                0 8px 32px 0 rgba(31, 38, 135, 0.37),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            text-align: center;
+        }
+
+        /* Imagen superior */
+        .image-frame {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Título */
+        .christmas-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(255, 255, 255, 0.3);
+            line-height: 1.2;
+        }
+
+        /* Mensaje mágico con animación letra por letra */
+        .magic-message {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            min-height: 120px;
+        }
+
+        .magic-message .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: letterAppear 0.6s ease forwards;
+        }
+
+        @keyframes letterAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+                filter: blur(4px) brightness(2);
+            }
+            60% {
+                filter: brightness(1.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0) brightness(1);
+            }
+        }
+
+        .magic-message .letter.space {
+            width: 0.3em;
+        }
+
+        /* Botón WhatsApp */
+        .whatsapp-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+        }
+
+        .whatsapp-button:active {
+            transform: scale(0.96);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .christmas-title {
+                font-size: 2.3rem;
+            }
+            .gift-icon {
+                font-size: 5.5rem;
+            }
+            .open-button {
+                font-size: 1.2rem;
+                padding: 1.1rem 2.8rem;
+            }
+            .magic-message {
+                font-size: 0.95rem;
+            }
+            .glass-card {
+                padding: 2.5rem 1.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .christmas-title {
+                font-size: 2rem;
+            }
+            .magic-message {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio (sin autoplay, controlado por JS) -->
+    <audio id="christmasAudio" loop preload="auto">
+        <source src="cancionavidad.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Overlay de bienvenida -->
+    <div id="welcomeOverlay">
+        <div class="gift-icon">🎁</div>
+        <button class="open-button" id="openGiftBtn">ABRIR REGALO ✨</button>
+    </div>
+
+    <!-- Contenedor de nieve -->
+    <div id="snowContainer"></div>
+
+    <!-- Tarjeta principal -->
+    <div class="card-wrapper" id="cardWrapper">
+        <div class="glass-card">
+            <div class="image-frame">
+                <img 
+                    src="portada.jpg" 
+                    alt="Imagen Navideña Familia Reyes López" 
+                    onerror="this.src='https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=400&h=400&fit=crop'"
+                >
+            </div>
+            
+            <h1 class="christmas-title" id="christmasTitle">¡Feliz Navidad, Familia!</h1>
+            
+            <div class="magic-message" id="magicMessage">
+                Reconoce profundamente que el momento presente es todo lo que tienes. Haz del AHORA el foco principal de tu vida.
+            </div>
+            
+            <a href="https://wa.me/593986125952" class="whatsapp-button" target="_blank">
+                📱 Enviar un abrazo de vuelta
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Crear partículas de nieve
+        function createSnowflakes() {
+            const container = document.getElementById('snowContainer');
+            const snowChars = ['❄', '❅', '❆', '✻', '✼'];
+            const snowCount = 60;
+            
+            for (let i = 0; i < snowCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = snowChars[Math.floor(Math.random() * snowChars.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 0.8 + 0.6) + 'em';
+                snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                container.appendChild(snowflake);
+            }
+        }
+
+        // Obtener nombre de URL
+        function getNameFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nombre = urlParams.get('nombre');
+            
+            if (nombre) {
+                document.getElementById('christmasTitle').textContent = `¡Feliz Navidad, ${nombre}!`;
+            }
+        }
+
+        // Animación letra por letra (efecto mágico)
+        function animateTextLetterByLetter(element, delay = 50) {
+            const text = element.textContent;
+            element.textContent = '';
+            element.style.minHeight = '120px';
+            
+            text.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.className = char === ' ' ? 'letter space' : 'letter';
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.animationDelay = (index * delay) + 'ms';
+                element.appendChild(span);
+            });
+        }
+
+        // Inicializar
+        createSnowflakes();
+        getNameFromURL();
+
+        // Manejar clic en botón "Abrir Regalo"
+        document.getElementById('openGiftBtn').addEventListener('click', function() {
+            const audio = document.getElementById('christmasAudio');
+            const overlay = document.getElementById('welcomeOverlay');
+            const cardWrapper = document.getElementById('cardWrapper');
+            const magicMessage = document.getElementById('magicMessage');
+            
+            // Reproducir audio (funciona en iOS porque está en evento click)
+            audio.play().catch(function(error) {
+                console.log('Audio no disponible:', error);
+            });
+            
+            // Ocultar overlay
+            overlay.classList.add('hidden');
+            
+            // Mostrar tarjeta
+            setTimeout(function() {
+                cardWrapper.classList.add('visible');
+                
+                // Iniciar animación del mensaje mágico después de que aparezca la tarjeta
+                setTimeout(function() {
+                    animateTextLetterByLetter(magicMessage, 40);
+                }, 600);
+            }, 400);
+        });
+    </script>
+</body>
+</html>
